@@ -16,12 +16,9 @@ export function RankingsOverview() {
           {t.rankings.description}
         </p>
       </div>
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((category, index) => (
-          <div
-            key={category.id}
-            className={index < 2 ? "lg:col-span-3" : "lg:col-span-2"}
-          >
+          <div key={category.id}>
             <CategoryCard category={category} index={index} />
           </div>
         ))}
