@@ -29,12 +29,20 @@ const categories = [
     description_ko: "재미와 개성이 살아있는 가장 인상적인 스프레이.",
   },
   {
+    id: "buddies",
+    name_en: "Gun Buddies",
+    name_ko: "총기 장식",
+    description_en:
+      "Rank the charms that add personality to every weapon loadout.",
+    description_ko: "무기 장비에 개성을 더하는 최고의 총기 장식.",
+  },
+  {
     id: "flex",
     name_en: "Flex Items",
     name_ko: "플렉스 아이템",
     description_en:
-      "Rate the gun buddies and collectibles that complete the perfect loadout.",
-    description_ko: "완벽한 장비 구성을 마무리하는 총기 장식과 수집품.",
+      "Rank the handheld flex cosmetics made for showing off in a match.",
+    description_ko: "게임 안에서 직접 꺼내 자랑할 수 있는 플렉스 아이템.",
   },
   {
     id: "players",

@@ -26,7 +26,7 @@ const en = {
     fullRankings: "Full rankings",
     browse: "Choose your arena",
     browseDescription:
-      "Five categories. One community leaderboard. Pick a category and make your vote count.",
+      "Six categories. One community leaderboard. Pick a category and make your vote count.",
     topPick: "Top pick",
   },
   rankings: {
@@ -131,11 +131,18 @@ const en = {
         "The funniest, sharpest, and most recognizable sprays in the collection.",
       filterLabel: "Edition",
     },
+    buddies: {
+      name: "Gun buddies",
+      short: "Buddies",
+      description:
+        "Rank the charms that add personality to every weapon loadout.",
+      filterLabel: "Collection",
+    },
     flex: {
       name: "Flex items",
       short: "Flex",
       description:
-        "Rate the gun buddies and collectibles that complete the perfect loadout.",
+        "Rank the handheld flex cosmetics made for showing off in a match.",
       filterLabel: "Collection",
     },
     players: {
@@ -182,7 +189,7 @@ const ko: typeof en = {
     fullRankings: "전체 랭킹",
     browse: "카테고리를 선택하세요",
     browseDescription:
-      "다섯 개 카테고리, 하나의 커뮤니티 랭킹. 좋아하는 콘텐츠에 한 표를 더하세요.",
+      "여섯 개 카테고리, 하나의 커뮤니티 랭킹. 좋아하는 콘텐츠에 한 표를 더하세요.",
     topPick: "현재 1위",
   },
   rankings: {
@@ -283,10 +290,16 @@ const ko: typeof en = {
       description: "재미와 개성이 살아있는 가장 인상적인 스프레이.",
       filterLabel: "에디션",
     },
+    buddies: {
+      name: "총기 장식",
+      short: "총기 장식",
+      description: "무기 장비에 개성을 더하는 최고의 총기 장식을 선택하세요.",
+      filterLabel: "컬렉션",
+    },
     flex: {
       name: "플렉스 아이템",
       short: "플렉스",
-      description: "완벽한 장비 구성을 마무리하는 총기 장식과 수집품.",
+      description: "게임 안에서 직접 꺼내 자랑할 수 있는 플렉스 아이템.",
       filterLabel: "컬렉션",
     },
     players: {

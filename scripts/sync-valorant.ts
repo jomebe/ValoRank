@@ -85,7 +85,7 @@ async function syncSkins() {
 }
 
 async function syncGeneric(
-  categoryId: "agents" | "sprays" | "flex",
+  categoryId: "agents" | "sprays" | "buddies" | "flex",
   endpoint: string,
 ) {
   const [english, korean] = await Promise.all([
@@ -134,10 +134,11 @@ async function main() {
     "agents?isPlayableCharacter=true",
   );
   const sprays = await syncGeneric("sprays", "sprays");
-  const flex = await syncGeneric("flex", "buddies");
+  const buddies = await syncGeneric("buddies", "buddies");
+  const flex = await syncGeneric("flex", "flex");
 
   console.log(
-    `Valorant-API sync complete: ${skins} skins, ${agents} agents, ${sprays} sprays, ${flex} flex items.`,
+    `Valorant-API sync complete: ${skins} skins, ${agents} agents, ${sprays} sprays, ${buddies} buddies, ${flex} flex items.`,
   );
 }
 

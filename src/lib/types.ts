@@ -1,6 +1,12 @@
 export type Locale = "en" | "ko";
 
-export type CategoryId = "skins" | "agents" | "sprays" | "flex" | "players";
+export type CategoryId =
+  | "skins"
+  | "agents"
+  | "sprays"
+  | "buddies"
+  | "flex"
+  | "players";
 
 export type SortOption = "votes" | "name" | "newest";
 
