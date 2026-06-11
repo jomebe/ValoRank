@@ -53,7 +53,13 @@ export function RankingList({
         const matchesQuery =
           !normalizedQuery ||
           item.nameEn.toLocaleLowerCase().includes(normalizedQuery) ||
-          item.nameKo?.toLocaleLowerCase().includes(normalizedQuery);
+          item.nameKo?.toLocaleLowerCase().includes(normalizedQuery) ||
+          (categoryId === "players" &&
+            [item.extra.team, item.extra.region].some((value) =>
+              String(value || "")
+                .toLocaleLowerCase()
+                .includes(normalizedQuery),
+            ));
         const matchesFilter =
           filter === t.rankings.allFilters ||
           getFilterValues(item, categoryId).includes(filter);
