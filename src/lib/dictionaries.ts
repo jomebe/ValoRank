@@ -11,7 +11,7 @@ const en = {
   },
   home: {
     eyebrow: "THE COMMUNITY DECIDES",
-    titleTop: "Rank the best of",
+    titleTop: "Vote for the best of",
     titleAccent: "VALORANT",
     description:
       "Vote for the skins, agents, collectibles, and players that define the game. Every vote reshapes the leaderboard.",

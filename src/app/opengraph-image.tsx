@@ -40,7 +40,7 @@ export default function OpenGraphImage() {
             letterSpacing: -6,
           }}
         >
-          Rank the best of
+          Vote for the best of
         </div>
         <div
           style={{
