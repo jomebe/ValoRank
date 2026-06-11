@@ -267,12 +267,65 @@ export const getTopItems = cache(async (limit = 10) => {
   const supabase = await createClient();
 
   if (supabase) {
+    const { data: votes, error: votesError } = await supabase
+      .from("votes")
+      .select("item_id, created_at")
+      .order("created_at", { ascending: false });
+
+    if (!votesError && votes?.length) {
+      const voteStats = new Map<
+        string,
+        { count: number; latestVote: string }
+      >();
+      votes.forEach((vote) => {
+        const current = voteStats.get(vote.item_id);
+        voteStats.set(vote.item_id, {
+          count: (current?.count || 0) + 1,
+          latestVote: current?.latestVote || vote.created_at,
+        });
+      });
+
+      const topIds = [...voteStats.entries()]
+        .sort(
+          ([, a], [, b]) =>
+            b.count - a.count ||
+            b.latestVote.localeCompare(a.latestVote),
+        )
+        .slice(0, limit)
+        .map(([id]) => id);
+
+      const { data: items, error: itemsError } = await supabase
+        .from("items")
+        .select(
+          "id, external_id, category_id, name_en, name_ko, description_en, description_ko, image_url, extra, source, created_at",
+        )
+        .in("id", topIds);
+
+      if (!itemsError && items?.length) {
+        const itemsById = new Map(
+          (items as unknown as ItemRow[]).map((row) => [row.id, row]),
+        );
+        return topIds.flatMap((id, index) => {
+          const row = itemsById.get(id);
+          if (!row) {
+            return [];
+          }
+          return [{
+            ...fromItemRow(row),
+            voteCount: voteStats.get(id)?.count || 0,
+            rank: index + 1,
+          }];
+        });
+      }
+    }
+
     const { data, error } = await supabase
       .from("items")
       .select(
         "id, external_id, category_id, name_en, name_ko, description_en, description_ko, image_url, extra, source, created_at, votes(count)",
       )
-      .limit(120);
+      .order("created_at", { ascending: false })
+      .limit(limit);
 
     if (!error && data?.length) {
       return rankItems(
