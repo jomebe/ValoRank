@@ -24,9 +24,9 @@ export async function generateMetadata({
     title: item.nameEn,
     description:
       item.descriptionEn ||
-      `Vote for ${item.nameEn} on the VALORANK community leaderboard.`,
+      `Vote for ${item.nameEn} on the VALOVOTE community leaderboard.`,
     openGraph: {
-      title: `${item.nameEn} | VALORANK`,
+      title: `${item.nameEn} | VALOVOTE`,
       images: item.imageUrl ? [item.imageUrl] : undefined,
     },
   };

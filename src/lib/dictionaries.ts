@@ -76,13 +76,13 @@ const en = {
     description: "The contenders you have backed across every leaderboard.",
     signedOutTitle: "Sign in to see your votes",
     signedOutDescription:
-      "Your voting history is saved securely to your VALORANK profile.",
+      "Your voting history is saved securely to your VALOVOTE profile.",
     emptyTitle: "No votes yet",
     emptyDescription: "Explore the rankings and back your first contender.",
   },
   settings: {
     title: "Settings",
-    description: "Choose how VALORANK looks and speaks to you.",
+    description: "Choose how VALOVOTE looks and speaks to you.",
     language: "Language",
     languageDescription:
       "Your choice is saved on this device and to your profile when signed in.",
@@ -90,12 +90,12 @@ const en = {
     korean: "한국어",
     appearance: "Appearance",
     dark: "Dark mode",
-    appearanceDescription: "VALORANK is designed around its dark esports theme.",
+    appearanceDescription: "VALOVOTE is designed around its dark esports theme.",
   },
   footer: {
     line: "Unofficial fan-made VALORANT ranking site.",
     disclaimer:
-      "VALORANK is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games.",
+      "VALOVOTE is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games.",
     data: "Game assets provided by Valorant-API.",
   },
   common: {
@@ -238,13 +238,13 @@ const ko: typeof en = {
     title: "내 투표",
     description: "내가 추천한 콘텐츠를 카테고리별로 확인할 수 있습니다.",
     signedOutTitle: "로그인 후 투표 기록을 확인하세요",
-    signedOutDescription: "투표 기록은 VALORANK 프로필에 안전하게 저장됩니다.",
+    signedOutDescription: "투표 기록은 VALOVOTE 프로필에 안전하게 저장됩니다.",
     emptyTitle: "아직 투표한 콘텐츠가 없습니다",
     emptyDescription: "랭킹을 둘러보고 첫 번째 콘텐츠를 추천해보세요.",
   },
   settings: {
     title: "설정",
-    description: "VALORANK의 언어와 화면 설정을 변경합니다.",
+    description: "VALOVOTE의 언어와 화면 설정을 변경합니다.",
     language: "언어",
     languageDescription:
       "선택한 언어는 이 기기와 로그인한 프로필에 저장됩니다.",
@@ -252,12 +252,12 @@ const ko: typeof en = {
     korean: "한국어",
     appearance: "화면",
     dark: "다크 모드",
-    appearanceDescription: "VALORANK는 e스포츠 감성의 다크 테마로 제작되었습니다.",
+    appearanceDescription: "VALOVOTE는 e스포츠 감성의 다크 테마로 제작되었습니다.",
   },
   footer: {
     line: "비공식 팬 제작 VALORANT 랭킹 사이트입니다.",
     disclaimer:
-      "VALORANK는 Riot Games의 공식 서비스가 아니며 Riot Games의 견해나 의견을 대변하지 않습니다.",
+      "VALOVOTE는 Riot Games의 공식 서비스가 아니며 Riot Games의 견해나 의견을 대변하지 않습니다.",
     data: "게임 에셋은 Valorant-API에서 제공됩니다.",
   },
   common: {

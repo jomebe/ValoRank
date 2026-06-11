@@ -23,17 +23,17 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   ),
   title: {
-    default: "VALORANK — Community VALORANT Rankings",
-    template: "%s | VALORANK",
+    default: "VALOVOTE — Community VALORANT Rankings",
+    template: "%s | VALOVOTE",
   },
   description:
     "Vote for the best VALORANT skins, agents, sprays, flex items, and pro players.",
   openGraph: {
-    title: "VALORANK — Rank the best of VALORANT",
+    title: "VALOVOTE — Vote for the best of VALORANT",
     description:
       "The fan-powered leaderboard for VALORANT skins, agents, collectibles, and players.",
     type: "website",
-    siteName: "VALORANK",
+    siteName: "VALOVOTE",
   },
   twitter: {
     card: "summary_large_image",

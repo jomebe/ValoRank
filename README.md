@@ -1,4 +1,4 @@
-# VALORANK
+# VALOVOTE
 
 팬 투표로 VALORANT 무기 스킨, 요원, 스프레이, 총기 장식, 프로 선수를 랭킹화하는 반응형 웹사이트입니다.
 
@@ -108,4 +108,4 @@ npm run sync:valorant
 
 ## Data and legal notice
 
-Game assets are loaded from [Valorant-API](https://valorant-api.com/). VALORANK is an unofficial fan-made site and is not endorsed by Riot Games. VALORANT and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
+Game assets are loaded from [Valorant-API](https://valorant-api.com/). VALOVOTE is an unofficial fan-made site and is not endorsed by Riot Games. VALORANT and Riot Games are trademarks or registered trademarks of Riot Games, Inc.

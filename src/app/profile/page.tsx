@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "My Votes",
-  description: "Review your VALORANK voting history.",
+  description: "Review your VALOVOTE voting history.",
 };
 
 export default async function ProfilePage() {

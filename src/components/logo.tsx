@@ -6,7 +6,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
     <Link
       href="/"
       className="group flex items-center gap-2.5"
-      aria-label="VALORANK home"
+      aria-label="VALOVOTE home"
     >
       <span className="relative grid size-8 place-items-center overflow-hidden rounded-[10px] bg-[#ff4655] shadow-[0_0_28px_rgba(255,70,85,.22)]">
         <svg
@@ -26,7 +26,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
           compact ? "text-base" : "text-lg",
         )}
       >
-        VALO<span className="text-[#ff5d6c]">RANK</span>
+        VALO<span className="text-[#ff5d6c]">VOTE</span>
       </span>
     </Link>
   );

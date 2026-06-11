@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "VALORANK — Rank the best of VALORANT";
+export const alt = "VALOVOTE — Vote for the best of VALORANT";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
