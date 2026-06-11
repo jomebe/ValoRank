@@ -1,0 +1,74 @@
+[
+  {
+    "id": "player-zekken",
+    "name": "zekken",
+    "team": "Sentinels",
+    "region": "Americas",
+    "imageUrl": "",
+    "descriptionEn": "Explosive duelist known for fearless entries and championship-level impact.",
+    "descriptionKo": "과감한 진입과 챔피언십 무대의 영향력으로 알려진 폭발적인 듀얼리스트."
+  },
+  {
+    "id": "player-valyn",
+    "name": "valyn",
+    "team": "G2 Esports",
+    "region": "Americas",
+    "imageUrl": "",
+    "descriptionEn": "A composed in-game leader with elite mid-round calling.",
+    "descriptionKo": "정교한 미드 라운드 콜이 강점인 침착한 인게임 리더."
+  },
+  {
+    "id": "player-forsaken",
+    "name": "f0rsakeN",
+    "team": "Paper Rex",
+    "region": "Pacific",
+    "imageUrl": "",
+    "descriptionEn": "A flexible playmaker whose creativity defines the Paper Rex style.",
+    "descriptionKo": "창의적인 플레이로 Paper Rex의 스타일을 상징하는 다재다능한 플레이메이커."
+  },
+  {
+    "id": "player-texture",
+    "name": "t3xture",
+    "team": "Gen.G",
+    "region": "Pacific",
+    "imageUrl": "",
+    "descriptionEn": "A mechanically gifted duelist with world-class Operator control.",
+    "descriptionKo": "세계적인 오퍼레이터 운용과 뛰어난 피지컬을 갖춘 듀얼리스트."
+  },
+  {
+    "id": "player-boaster",
+    "name": "Boaster",
+    "team": "FNATIC",
+    "region": "EMEA",
+    "imageUrl": "",
+    "descriptionEn": "Veteran leader, strategist, and one of the game's most recognizable personalities.",
+    "descriptionKo": "노련한 리더십과 전략, 독보적인 캐릭터를 모두 갖춘 베테랑."
+  },
+  {
+    "id": "player-zmjjkk",
+    "name": "ZmjjKK",
+    "team": "EDward Gaming",
+    "region": "China",
+    "imageUrl": "",
+    "descriptionEn": "A high-energy superstar celebrated for fearless Operator plays.",
+    "descriptionKo": "거침없는 오퍼레이터 플레이로 사랑받는 에너지 넘치는 슈퍼스타."
+  },
+  {
+    "id": "player-benjyfishy",
+    "name": "benjyfishy",
+    "team": "Team Heretics",
+    "region": "EMEA",
+    "imageUrl": "",
+    "descriptionEn": "A disciplined sentinel player with sharp mechanics and clutch timing.",
+    "descriptionKo": "날카로운 피지컬과 클러치 타이밍을 갖춘 안정적인 센티넬 플레이어."
+  },
+  {
+    "id": "player-kai",
+    "name": "Kai",
+    "team": "Wolves Esports",
+    "region": "China",
+    "imageUrl": "",
+    "descriptionEn": "A rising star delivering confident performances on the international stage.",
+    "descriptionKo": "국제 무대에서 자신감 있는 경기력을 보여주는 차세대 스타."
+  }
+]
