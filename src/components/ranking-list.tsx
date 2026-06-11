@@ -38,6 +38,7 @@ export function RankingList({
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortOption>("votes");
   const [filter, setFilter] = useState(t.rankings.allFilters);
+  const [visibleCount, setVisibleCount] = useState(48);
 
   const filterOptions = useMemo(() => {
     const values = items
@@ -85,7 +86,10 @@ export function RankingList({
   const reset = () => {
     setQuery("");
     setFilter(t.rankings.allFilters);
+    setVisibleCount(48);
   };
+
+  const displayedItems = visibleItems.slice(0, visibleCount);
 
   return (
     <div>
@@ -136,7 +140,7 @@ export function RankingList({
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {visibleItems.length ? (
-          visibleItems.map((item) => (
+          displayedItems.map((item) => (
             <RankingCard
               key={item.id}
               item={item}
@@ -147,6 +151,17 @@ export function RankingList({
           <EmptyState onClear={reset} />
         )}
       </div>
+      {displayedItems.length < visibleItems.length && (
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setVisibleCount((count) => count + 48)}
+            className="rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm font-bold text-white/70 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+          >
+            {locale === "ko" ? "더 보기" : "Load more"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

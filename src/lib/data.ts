@@ -229,7 +229,7 @@ export const getCategoryItems = cache(async (categoryId: CategoryId) => {
     )
     .eq("category_id", categoryId)
     .order("name_en")
-    .limit(120);
+    .range(0, 999);
 
   const { data, error } = await baseQuery;
 
@@ -242,23 +242,19 @@ export const getCategoryItems = cache(async (categoryId: CategoryId) => {
 
   let rows = data as unknown as ItemRow[];
   if (categoryId === "skins") {
-    const { data: meleeItems, error: meleeError } = await supabase
+    const { data: remainingItems, error: remainingError } = await supabase
       .from("items")
       .select(
         "id, external_id, category_id, name_en, name_ko, description_en, description_ko, image_url, extra, source, created_at, votes(count)",
       )
       .eq("category_id", "skins")
-      .contains("extra", { weapon: "Melee" })
-      .order("name_en");
+      .order("name_en")
+      .range(1000, 1999);
 
-    if (!meleeError && meleeItems?.length) {
-      const uniqueRows = new Map(
-        [...rows, ...(meleeItems as unknown as ItemRow[])].map((row) => [
-          row.id,
-          row,
-        ]),
-      );
-      rows = [...uniqueRows.values()];
+    if (remainingError) {
+      console.error("Failed to load remaining skins from Supabase", remainingError);
+    } else if (remainingItems?.length) {
+      rows = [...rows, ...(remainingItems as unknown as ItemRow[])];
     }
   }
 
