@@ -133,7 +133,8 @@ async function getLiveSkins() {
     .filter(
       (skin) =>
         skin.imageUrl &&
-        !skin.nameEn.toLowerCase().startsWith("standard "),
+        !skin.nameEn.toLowerCase().startsWith("standard ") &&
+        skin.nameEn !== "Random Favorite Skin",
     )
     .slice(0, 120);
 }
@@ -221,12 +222,16 @@ export const getCategoryItems = cache(async (categoryId: CategoryId) => {
     return getLiveCategoryItems(categoryId);
   }
 
-  const { data, error } = await supabase
+  const baseQuery = supabase
     .from("items")
     .select(
       "id, external_id, category_id, name_en, name_ko, description_en, description_ko, image_url, extra, source, created_at, votes(count)",
     )
-    .eq("category_id", categoryId);
+    .eq("category_id", categoryId)
+    .order("name_en")
+    .limit(120);
+
+  const { data, error } = await baseQuery;
 
   if (error || !data?.length) {
     if (error) {
@@ -235,8 +240,30 @@ export const getCategoryItems = cache(async (categoryId: CategoryId) => {
     return getLiveCategoryItems(categoryId);
   }
 
+  let rows = data as unknown as ItemRow[];
+  if (categoryId === "skins") {
+    const { data: meleeItems, error: meleeError } = await supabase
+      .from("items")
+      .select(
+        "id, external_id, category_id, name_en, name_ko, description_en, description_ko, image_url, extra, source, created_at, votes(count)",
+      )
+      .eq("category_id", "skins")
+      .contains("extra", { weapon: "Melee" })
+      .order("name_en");
+
+    if (!meleeError && meleeItems?.length) {
+      const uniqueRows = new Map(
+        [...rows, ...(meleeItems as unknown as ItemRow[])].map((row) => [
+          row.id,
+          row,
+        ]),
+      );
+      rows = [...uniqueRows.values()];
+    }
+  }
+
   return rankItems(
-    ((data || []) as unknown as ItemRow[]).map(fromItemRow),
+    rows.map(fromItemRow),
   );
 });
 

@@ -76,7 +76,8 @@ async function syncSkins() {
     .filter(
       (item) =>
         item.image_url &&
-        !item.name_en.toLowerCase().startsWith("standard "),
+        !item.name_en.toLowerCase().startsWith("standard ") &&
+        item.name_en !== "Random Favorite Skin",
     );
 
   await upsertInBatches("items", rows, "category_id,external_id");
