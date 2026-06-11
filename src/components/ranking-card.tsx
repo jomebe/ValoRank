@@ -20,6 +20,7 @@ export function RankingCard({
   const { locale, dictionary: t } = useLocale();
   const name = getItemName(item, locale);
   const isAgent = item.categoryId === "agents";
+  const isPlayerCard = item.categoryId === "playercards";
 
   return (
     <article
@@ -43,6 +44,7 @@ export function RankingCard({
           imageClassName={cn(
             "p-8 transition duration-500 group-hover:scale-[1.045]",
             isAgent && "object-cover object-top p-0",
+            isPlayerCard && "object-contain p-3",
           )}
         />
         <div className="absolute left-3 top-3 flex items-center gap-2">

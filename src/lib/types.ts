@@ -6,6 +6,7 @@ export type CategoryId =
   | "sprays"
   | "buddies"
   | "flex"
+  | "playercards"
   | "players";
 
 export type SortOption = "votes" | "name" | "newest";

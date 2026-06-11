@@ -16,6 +16,7 @@ type LocalizedItem = {
   role?: { displayName: string } | null;
   levels?: Array<{ displayIcon?: string | null }>;
   chromas?: Array<{ fullRender?: string | null }>;
+  largeArt?: string | null;
 };
 type Weapon = {
   displayName: string;
@@ -87,7 +88,7 @@ async function syncSkins() {
 }
 
 async function syncGeneric(
-  categoryId: "agents" | "sprays" | "buddies" | "flex",
+  categoryId: "agents" | "sprays" | "buddies" | "flex" | "playercards",
   endpoint: string,
 ) {
   const [english, korean] = await Promise.all([
@@ -110,6 +111,7 @@ async function syncGeneric(
         description_en: item.description || null,
         description_ko: koItem?.description || null,
         image_url:
+          item.largeArt ||
           item.fullPortraitV2 ||
           item.fullPortrait ||
           item.fullTransparentIcon ||
@@ -138,9 +140,10 @@ async function main() {
   const sprays = await syncGeneric("sprays", "sprays");
   const buddies = await syncGeneric("buddies", "buddies");
   const flex = await syncGeneric("flex", "flex");
+  const playercards = await syncGeneric("playercards", "playercards");
 
   console.log(
-    `Valorant-API sync complete: ${skins} skins, ${agents} agents, ${sprays} sprays, ${buddies} buddies, ${flex} flex items.`,
+    `Valorant-API sync complete: ${skins} skins, ${agents} agents, ${sprays} sprays, ${buddies} buddies, ${flex} flex items, ${playercards} player cards.`,
   );
 }
 

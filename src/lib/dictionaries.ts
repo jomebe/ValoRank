@@ -26,7 +26,7 @@ const en = {
     fullRankings: "Full rankings",
     browse: "Choose your arena",
     browseDescription:
-      "Six categories. One community leaderboard. Pick a category and make your vote count.",
+      "Seven categories. One community leaderboard. Pick a category and make your vote count.",
     topPick: "Top pick",
   },
   rankings: {
@@ -145,6 +145,13 @@ const en = {
         "Rank the handheld flex cosmetics made for showing off in a match.",
       filterLabel: "Collection",
     },
+    playercards: {
+      name: "Player cards",
+      short: "Cards",
+      description:
+        "Rank the artwork that gives every VALORANT profile its identity.",
+      filterLabel: "Collection",
+    },
     players: {
       name: "Pro players",
       short: "Players",
@@ -189,7 +196,7 @@ const ko: typeof en = {
     fullRankings: "전체 랭킹",
     browse: "카테고리를 선택하세요",
     browseDescription:
-      "여섯 개 카테고리, 하나의 커뮤니티 랭킹. 좋아하는 콘텐츠에 한 표를 더하세요.",
+      "일곱 개 카테고리, 하나의 커뮤니티 랭킹. 좋아하는 콘텐츠에 한 표를 더하세요.",
     topPick: "현재 1위",
   },
   rankings: {
@@ -300,6 +307,12 @@ const ko: typeof en = {
       name: "플렉스 아이템",
       short: "플렉스",
       description: "게임 안에서 직접 꺼내 자랑할 수 있는 플렉스 아이템.",
+      filterLabel: "컬렉션",
+    },
+    playercards: {
+      name: "플레이어 카드",
+      short: "플레이어 카드",
+      description: "VALORANT 프로필의 개성을 완성하는 최고의 카드 아트.",
       filterLabel: "컬렉션",
     },
     players: {

@@ -45,6 +45,14 @@ const categories = [
     description_ko: "게임 안에서 직접 꺼내 자랑할 수 있는 플렉스 아이템.",
   },
   {
+    id: "playercards",
+    name_en: "Player Cards",
+    name_ko: "플레이어 카드",
+    description_en:
+      "Rank the artwork that gives every VALORANT profile its identity.",
+    description_ko: "VALORANT 프로필의 개성을 완성하는 최고의 카드 아트.",
+  },
+  {
     id: "players",
     name_en: "Pro Players",
     name_ko: "발로란트 선수",
