@@ -228,9 +228,11 @@ export const getCategoryItems = cache(async (categoryId: CategoryId) => {
     )
     .eq("category_id", categoryId);
 
-  if (error) {
-    console.error(`Failed to load ${categoryId} from Supabase`, error);
-    return [];
+  if (error || !data?.length) {
+    if (error) {
+      console.error(`Failed to load ${categoryId} from Supabase`, error);
+    }
+    return getLiveCategoryItems(categoryId);
   }
 
   return rankItems(
@@ -249,7 +251,7 @@ export const getTopItems = cache(async (limit = 10) => {
       )
       .limit(120);
 
-    if (!error && data) {
+    if (!error && data?.length) {
       return rankItems(
         (data as unknown as ItemRow[]).map(fromItemRow),
       ).slice(0, limit);
