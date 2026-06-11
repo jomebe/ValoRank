@@ -9,7 +9,7 @@ export type CategoryId =
   | "playercards"
   | "players";
 
-export type SortOption = "votes" | "name" | "newest";
+export type SortOption = "votes-desc" | "votes-asc" | "name" | "newest";
 
 export type ItemExtra = {
   weapon?: string;

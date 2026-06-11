@@ -36,7 +36,7 @@ export function RankingList({
 }) {
   const { locale, dictionary: t } = useLocale();
   const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<SortOption>("votes");
+  const [sort, setSort] = useState<SortOption>("votes-desc");
   const [filter, setFilter] = useState(t.rankings.allFilters);
   const [visibleCount, setVisibleCount] = useState(48);
 
@@ -77,6 +77,9 @@ export function RankingList({
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
         }
+        if (sort === "votes-asc") {
+          return a.voteCount - b.voteCount || a.rank - b.rank;
+        }
         return a.rank - b.rank;
       });
   }, [
@@ -114,7 +117,8 @@ export function RankingList({
               onChange={(event) => setSort(event.target.value as SortOption)}
               className="h-12 w-full appearance-none rounded-xl border border-white/8 bg-[#151a22] pl-11 pr-4 text-sm font-semibold text-white/65 outline-none focus:border-[#ff5d6c]/40"
             >
-              <option value="votes">{t.rankings.sortVotes}</option>
+              <option value="votes-desc">{t.rankings.sortVotesDesc}</option>
+              <option value="votes-asc">{t.rankings.sortVotesAsc}</option>
               <option value="name">{t.rankings.sortName}</option>
               <option value="newest">{t.rankings.sortNewest}</option>
             </select>
