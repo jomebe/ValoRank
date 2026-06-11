@@ -12,7 +12,8 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "seed": "tsx scripts/seed.ts",
     "sync:valorant": "tsx scripts/sync-valorant.ts",
-    "sync:players": "tsx scripts/sync-players.ts"
+    "sync:players": "tsx scripts/sync-players.ts",
+    "sync:player-photos": "tsx scripts/sync-player-photos.ts"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.19.11",
