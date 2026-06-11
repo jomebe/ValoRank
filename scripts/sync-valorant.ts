@@ -65,7 +65,9 @@ async function syncSkins() {
         description_en: null,
         description_ko: null,
         image_url:
-          skin.displayIcon || skin.chromas?.[0]?.fullRender || null,
+          skin.uuid === "2a049f35-4bcd-af25-21fd-ec942e2d5007"
+            ? skin.chromas?.[0]?.fullRender || skin.displayIcon || null
+            : skin.displayIcon || skin.chromas?.[0]?.fullRender || null,
         extra: {
           weapon: weapon.displayName,
           tier: skin.contentTierUuid || null,
