@@ -19,7 +19,7 @@ export function CategoryCard({
   return (
     <Link
       href={`/rankings/${category.id}`}
-      className="group relative min-h-[250px] overflow-hidden rounded-[24px] border border-white/[0.075] bg-[#10151c] p-6 transition duration-300 hover:-translate-y-1 hover:border-white/15"
+      className="group relative block min-h-[250px] w-full overflow-hidden rounded-[24px] border border-white/[0.075] bg-[#10151c] p-6 transition duration-300 hover:-translate-y-1 hover:border-white/15"
     >
       <div
         className="absolute -right-12 -top-12 size-40 rounded-full opacity-0 blur-3xl transition duration-500 group-hover:opacity-20"
