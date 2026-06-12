@@ -26,7 +26,7 @@ const en = {
     fullRankings: "Full rankings",
     browse: "Choose your arena",
     browseDescription:
-      "Seven categories. One community leaderboard. Pick a category and make your vote count.",
+      "Eight categories. One community leaderboard. Pick a category and make your vote count.",
     topPick: "Top pick",
   },
   rankings: {
@@ -153,6 +153,13 @@ const en = {
         "Rank the artwork that gives every VALORANT profile its identity.",
       filterLabel: "Collection",
     },
+    titles: {
+      name: "Player titles",
+      short: "Titles",
+      description:
+        "Rank the titles that best express a player's identity and achievements.",
+      filterLabel: "Collection",
+    },
     players: {
       name: "Pro players",
       short: "Players",
@@ -197,7 +204,7 @@ const ko: typeof en = {
     fullRankings: "전체 랭킹",
     browse: "카테고리를 선택하세요",
     browseDescription:
-      "일곱 개 카테고리, 하나의 커뮤니티 랭킹. 좋아하는 콘텐츠에 한 표를 더하세요.",
+      "여덟 개 카테고리, 하나의 커뮤니티 랭킹. 좋아하는 콘텐츠에 한 표를 더하세요.",
     topPick: "현재 1위",
   },
   rankings: {
@@ -315,6 +322,12 @@ const ko: typeof en = {
       name: "플레이어 카드",
       short: "플레이어 카드",
       description: "VALORANT 프로필의 개성을 완성하는 최고의 카드 아트.",
+      filterLabel: "컬렉션",
+    },
+    titles: {
+      name: "칭호",
+      short: "칭호",
+      description: "플레이어의 개성과 업적을 가장 잘 표현하는 칭호.",
       filterLabel: "컬렉션",
     },
     players: {

@@ -44,15 +44,21 @@ export function RankingPreview({ items }: { items: RankingItem[] }) {
               >
                 {index === 0 ? <Crown className="mx-auto size-3.5" /> : index + 1}
               </span>
-              <ItemImage
-                src={item.imageUrl}
-                alt={name}
-                className="size-11 rounded-xl"
-                imageClassName={cn(
-                  "p-1.5",
-                  item.categoryId === "agents" && "object-cover p-0",
-                )}
-              />
+              {item.categoryId === "titles" ? (
+                <div className="grid size-11 place-items-center rounded-xl bg-[#172019] px-1 text-center text-[8px] font-black leading-tight text-[#9ee493]">
+                  {String(item.extra.titleText || name).slice(0, 10)}
+                </div>
+              ) : (
+                <ItemImage
+                  src={item.imageUrl}
+                  alt={name}
+                  className="size-11 rounded-xl"
+                  imageClassName={cn(
+                    "p-1.5",
+                    item.categoryId === "agents" && "object-cover p-0",
+                  )}
+                />
+              )}
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-white/82 transition group-hover:text-white">
                   {name}

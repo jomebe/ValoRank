@@ -53,6 +53,14 @@ const categories = [
     description_ko: "VALORANT 프로필의 개성을 완성하는 최고의 카드 아트.",
   },
   {
+    id: "titles",
+    name_en: "Player Titles",
+    name_ko: "칭호",
+    description_en:
+      "Rank the titles that best express a player's identity and achievements.",
+    description_ko: "플레이어의 개성과 업적을 가장 잘 표현하는 칭호.",
+  },
+  {
     id: "players",
     name_en: "Pro Players",
     name_ko: "발로란트 선수",

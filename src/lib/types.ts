@@ -7,6 +7,7 @@ export type CategoryId =
   | "buddies"
   | "flex"
   | "playercards"
+  | "titles"
   | "players";
 
 export type SortOption = "votes-desc" | "votes-asc" | "name" | "newest";

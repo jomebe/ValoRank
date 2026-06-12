@@ -17,6 +17,7 @@ type LocalizedItem = {
   levels?: Array<{ displayIcon?: string | null }>;
   chromas?: Array<{ fullRender?: string | null }>;
   largeArt?: string | null;
+  titleText?: string | null;
 };
 type Weapon = {
   displayName: string;
@@ -88,7 +89,13 @@ async function syncSkins() {
 }
 
 async function syncGeneric(
-  categoryId: "agents" | "sprays" | "buddies" | "flex" | "playercards",
+  categoryId:
+    | "agents"
+    | "sprays"
+    | "buddies"
+    | "flex"
+    | "playercards"
+    | "titles",
   endpoint: string,
 ) {
   const [english, korean] = await Promise.all([
@@ -106,8 +113,13 @@ async function syncGeneric(
       return {
         external_id: item.uuid,
         category_id: categoryId,
-        name_en: item.displayName,
-        name_ko: koItem?.displayName || null,
+        name_en: item.displayName || item.titleText || "Untitled",
+        name_ko:
+          koItem?.displayName ||
+          koItem?.titleText ||
+          item.displayName ||
+          item.titleText ||
+          null,
         description_en: item.description || null,
         description_ko: koItem?.description || null,
         image_url:
@@ -121,11 +133,12 @@ async function syncGeneric(
         extra: {
           role: item.role?.displayName || null,
           tier: item.contentTierUuid || null,
+          titleText: item.titleText || null,
         },
         source: "valorant-api",
       };
     })
-    .filter((item) => item.image_url);
+    .filter((item) => categoryId === "titles" || item.image_url);
 
   await upsertInBatches("items", rows, "category_id,external_id");
   return rows.length;
@@ -141,9 +154,10 @@ async function main() {
   const buddies = await syncGeneric("buddies", "buddies");
   const flex = await syncGeneric("flex", "flex");
   const playercards = await syncGeneric("playercards", "playercards");
+  const titles = await syncGeneric("titles", "playertitles");
 
   console.log(
-    `Valorant-API sync complete: ${skins} skins, ${agents} agents, ${sprays} sprays, ${buddies} buddies, ${flex} flex items, ${playercards} player cards.`,
+    `Valorant-API sync complete: ${skins} skins, ${agents} agents, ${sprays} sprays, ${buddies} buddies, ${flex} flex items, ${playercards} player cards, ${titles} titles.`,
   );
 }
 

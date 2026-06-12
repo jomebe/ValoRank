@@ -21,6 +21,7 @@ export function RankingCard({
   const name = getItemName(item, locale);
   const isAgent = item.categoryId === "agents";
   const isPlayerCard = item.categoryId === "playercards";
+  const isTitle = item.categoryId === "titles";
 
   return (
     <article
@@ -34,19 +35,27 @@ export function RankingCard({
     >
       <div className="absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       <Link href={`/item/${item.id}`} className="relative block">
-        <ItemImage
-          src={item.imageUrl}
-          alt={name}
-          className={cn(
-            "aspect-[1.2/1]",
-            featured && "md:h-full md:min-h-[280px]",
-          )}
-          imageClassName={cn(
-            "p-8 transition duration-500 group-hover:scale-[1.045]",
-            isAgent && "object-cover object-top p-0",
-            isPlayerCard && "object-contain p-3",
-          )}
-        />
+        {isTitle ? (
+          <div className="grid aspect-[1.2/1] place-items-center bg-[radial-gradient(circle_at_50%_40%,rgba(158,228,147,.13),transparent_58%),#111721] px-7">
+            <span className="text-center text-2xl font-black tracking-[-0.04em] text-white/85">
+              {String(item.extra.titleText || name)}
+            </span>
+          </div>
+        ) : (
+          <ItemImage
+            src={item.imageUrl}
+            alt={name}
+            className={cn(
+              "aspect-[1.2/1]",
+              featured && "md:h-full md:min-h-[280px]",
+            )}
+            imageClassName={cn(
+              "p-8 transition duration-500 group-hover:scale-[1.045]",
+              isAgent && "object-cover object-top p-0",
+              isPlayerCard && "object-contain p-3",
+            )}
+          />
+        )}
         <div className="absolute left-3 top-3 flex items-center gap-2">
           <span
             className={cn(
