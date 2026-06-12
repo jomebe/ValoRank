@@ -35,9 +35,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
-  other: {
-    "google-adsense-account": "ca-pub-4407672753126233",
-  },
 };
 
 export default async function RootLayout({
@@ -52,14 +49,14 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full">
-        <Script
-          id="google-adsense"
+      <head>
+        <script
           async
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4407672753126233"
+          crossOrigin="anonymous"
         />
+      </head>
+      <body className="min-h-full">
         <Script
           id="google-analytics"
           strategy="afterInteractive"
