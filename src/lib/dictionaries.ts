@@ -91,7 +91,8 @@ const en = {
     korean: "한국어",
     appearance: "Appearance",
     dark: "Dark mode",
-    appearanceDescription: "VALOVOTE is designed around its dark esports theme.",
+    light: "Light mode",
+    appearanceDescription: "Choose between dark and light mode.",
   },
   footer: {
     line: "Unofficial fan-made VALORANT ranking site.",
@@ -268,7 +269,8 @@ const ko: typeof en = {
     korean: "한국어",
     appearance: "화면",
     dark: "다크 모드",
-    appearanceDescription: "VALOVOTE는 e스포츠 감성의 다크 테마로 제작되었습니다.",
+    light: "화이트 모드",
+    appearanceDescription: "다크 모드와 화이트 모드 중 선택하세요.",
   },
   footer: {
     line: "비공식 팬 제작 VALORANT 랭킹 사이트입니다.",

@@ -1,11 +1,13 @@
 "use client";
 
-import { Check, Moon, Languages } from "lucide-react";
+import { Check, Languages, Moon, Sun } from "lucide-react";
 import { useLocale } from "@/components/providers/locale-provider";
+import { useTheme } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 
 export function SettingsContent() {
   const { locale, setLocale, dictionary: t } = useLocale();
+  const { theme, setTheme } = useTheme();
 
   return (
     <main className="page-shell min-h-[70vh] py-16 md:py-24">
@@ -58,10 +60,31 @@ export function SettingsContent() {
               <p className="mt-1 text-sm leading-6 text-white/38">
                 {t.settings.appearanceDescription}
               </p>
-              <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1.5 text-xs font-bold text-white/60">
-                <Check className="size-3.5 text-[#65d9e8]" />
-                {t.settings.dark}
-              </span>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {(["dark", "light"] as const).map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setTheme(option)}
+                    className={cn(
+                      "flex h-11 items-center justify-between rounded-xl border px-4 text-xs font-bold transition",
+                      theme === option
+                        ? "border-[#ff5d6c]/35 bg-[#ff4655]/10 text-white"
+                        : "border-white/7 bg-white/[0.025] text-white/45 hover:text-white",
+                    )}
+                  >
+                    <span className="flex items-center gap-2">
+                      {option === "dark" ? (
+                        <Moon className="size-3.5" />
+                      ) : (
+                        <Sun className="size-3.5" />
+                      )}
+                      {option === "dark" ? t.settings.dark : t.settings.light}
+                    </span>
+                    {theme === option && <Check className="size-3.5" />}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </section>

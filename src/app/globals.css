@@ -5,6 +5,12 @@
   --foreground: #f5f7fb;
 }
 
+:root[data-theme="light"] {
+  --background: #f4f6fa;
+  --foreground: #151922;
+  color-scheme: light;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -84,6 +90,49 @@ select:focus-visible {
 .section-title,
 .page-title {
   word-break: keep-all;
+}
+
+:root[data-theme="light"] body {
+  background: #f4f6fa;
+}
+
+:root[data-theme="light"] .hero-grid {
+  background-color: #eef1f6;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+}
+
+:root[data-theme="light"] .hero-grid::after {
+  background: linear-gradient(90deg, rgba(244, 246, 250, 0.08), transparent 45%, rgba(244, 246, 250, 0.2));
+}
+
+:root[data-theme="light"] .section-title,
+:root[data-theme="light"] .page-title,
+:root[data-theme="light"] .text-white {
+  color: #151922 !important;
+}
+
+:root[data-theme="light"] [class*="text-white/"] {
+  color: rgba(21, 25, 34, 0.58) !important;
+}
+
+:root[data-theme="light"] [class*="border-white"] {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+:root[data-theme="light"] [class*="bg-[#0"],
+:root[data-theme="light"] [class*="bg-[#1"] {
+  background-color: #ffffff !important;
+}
+
+:root[data-theme="light"] [class*="bg-white/"] {
+  background-color: rgba(15, 23, 42, 0.045) !important;
+}
+
+:root[data-theme="light"] header,
+:root[data-theme="light"] footer {
+  background-color: rgba(255, 255, 255, 0.92);
 }
 
 .eyebrow {
