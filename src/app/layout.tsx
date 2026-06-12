@@ -60,6 +60,19 @@ export default async function RootLayout({
           crossOrigin="anonymous"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4407672753126233"
         />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-ZGDXMFFSJ0"
+        />
+        <Script id="google-analytics-config" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-ZGDXMFFSJ0');
+          `}
+        </Script>
         <AppProviders initialLocale="ko" initialUser={null}>
           <div className="flex min-h-screen flex-col">
             <Header />
