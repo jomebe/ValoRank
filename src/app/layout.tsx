@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { AppProviders } from "@/components/providers/app-providers";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -35,6 +36,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  other: {
+    "google-adsense-account": "ca-pub-4407672753126233",
+  },
 };
 
 export default async function RootLayout({
@@ -50,6 +54,13 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
+        <Script
+          id="google-adsense"
+          async
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4407672753126233"
+        />
         <AppProviders initialLocale="ko" initialUser={null}>
           <div className="flex min-h-screen flex-col">
             <Header />
