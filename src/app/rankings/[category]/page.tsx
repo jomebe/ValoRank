@@ -24,6 +24,15 @@ export async function generateMetadata({
   return {
     title: copy.name,
     description: copy.description,
+    alternates: {
+      canonical: `/rankings/${category}/`,
+    },
+    openGraph: {
+      title: `${copy.name} | VALOVOTE`,
+      description: copy.description,
+      url: `/rankings/${category}/`,
+      type: "website",
+    },
   };
 }
 

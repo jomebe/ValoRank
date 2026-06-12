@@ -25,12 +25,18 @@ export const metadata: Metadata = {
   },
   description:
     "Vote for the best VALORANT skins, agents, sprays, flex items, and pro players.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "VALOVOTE — Vote for the best of VALORANT",
     description:
       "The fan-powered leaderboard for VALORANT skins, agents, collectibles, and players.",
     type: "website",
     siteName: "VALOVOTE",
+    url: siteUrl,
+    locale: "ko_KR",
+    alternateLocale: ["en_US"],
   },
   twitter: {
     card: "summary_large_image",
@@ -57,6 +63,22 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full">
+        <Script
+          id="website-structured-data"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+        >
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "VALOVOTE",
+            alternateName: "발로보트",
+            url: siteUrl,
+            description:
+              "Community voting and rankings for VALORANT skins, agents, collectibles, titles, and pro players.",
+            inLanguage: ["ko", "en"],
+          })}
+        </Script>
         <Script
           id="google-analytics"
           strategy="afterInteractive"
