@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, BarChart3, Box, Sparkles, UsersRound } from "lucide-react";
 import { CategoryCard } from "@/components/category-card";
+import { AdsterraAd } from "@/components/adsterra-ad";
 import { ItemImage } from "@/components/item-image";
 import { useLocale } from "@/components/providers/locale-provider";
 import { RankingPreview } from "@/components/ranking-preview";
@@ -130,6 +131,13 @@ export function HomeContent({
         </div>
       </section>
 
+      <aside
+        aria-label="Advertisement"
+        className="page-shell border-b border-white/[0.055] py-5"
+      >
+        <AdsterraAd size="banner" />
+      </aside>
+
       <section className="page-shell py-20 md:py-28">
         <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
           <div>
@@ -140,6 +148,9 @@ export function HomeContent({
             </p>
           </div>
           <RankingPreview items={topItems} />
+        </div>
+        <div className="mt-10">
+          <AdsterraAd size="native" />
         </div>
       </section>
 
@@ -154,6 +165,9 @@ export function HomeContent({
             <p className="mt-4 text-sm leading-7 text-white/42">
               {t.home.browseDescription}
             </p>
+          </div>
+          <div className="mb-10">
+            <AdsterraAd size="rectangle" />
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category, index) => (
