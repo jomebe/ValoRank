@@ -67,7 +67,13 @@ export function RankingCard({
                   : "border-white/8 bg-black/30 text-white/60",
             )}
           >
-            {item.rank === 1 ? <Crown className="size-3.5" /> : `#${item.rank}`}
+            {item.tied
+              ? locale === "ko"
+                ? `공동 ${item.rank}위`
+                : `Tied #${item.rank}`
+              : item.rank === 1
+                ? <Crown className="size-3.5" />
+                : `#${item.rank}`}
           </span>
           {item.rank <= 3 && (
             <span className="rounded-md bg-black/35 px-2 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-white/55 backdrop-blur">

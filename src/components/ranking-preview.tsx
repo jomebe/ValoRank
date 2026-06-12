@@ -28,7 +28,7 @@ export function RankingPreview({ items }: { items: RankingItem[] }) {
         </Link>
       </div>
       <div className="divide-y divide-white/[0.055]">
-        {items.slice(0, 6).map((item, index) => {
+        {items.slice(0, 6).map((item) => {
           const name = getItemName(item, locale);
           return (
             <Link
@@ -39,10 +39,16 @@ export function RankingPreview({ items }: { items: RankingItem[] }) {
               <span
                 className={cn(
                   "text-center text-xs font-black",
-                  index === 0 ? "text-[#f2c961]" : "text-white/28",
+                  item.rank === 1 ? "text-[#f2c961]" : "text-white/28",
                 )}
               >
-                {index === 0 ? <Crown className="mx-auto size-3.5" /> : index + 1}
+                {item.tied
+                  ? locale === "ko"
+                    ? `공동 ${item.rank}`
+                    : `T${item.rank}`
+                  : item.rank === 1
+                    ? <Crown className="mx-auto size-3.5" />
+                    : item.rank}
               </span>
               {item.categoryId === "titles" ? (
                 <div className="grid size-11 place-items-center rounded-xl bg-[#172019] px-1 text-center text-[8px] font-black leading-tight text-[#9ee493]">

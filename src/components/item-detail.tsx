@@ -67,7 +67,11 @@ export function ItemDetail({
                 <div className="rounded-2xl border border-white/7 bg-white/[0.025] p-4">
                   <Medal className="size-4 text-[#f1c75b]" />
                   <p className="mt-3 text-2xl font-black text-white">
-                    #{item.rank}
+                    {item.tied
+                      ? locale === "ko"
+                        ? `공동 ${item.rank}위`
+                        : `Tied #${item.rank}`
+                      : `#${item.rank}`}
                   </p>
                   <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.13em] text-white/28">
                     {t.item.currentRank}

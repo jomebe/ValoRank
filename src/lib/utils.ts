@@ -25,11 +25,27 @@ export function formatCompactNumber(value: number, locale: Locale) {
 }
 
 export function rankItems(items: Omit<RankingItem, "rank">[]): RankingItem[] {
-  return [...items]
-    .sort(
-      (a, b) =>
-        b.voteCount - a.voteCount ||
-        a.nameEn.localeCompare(b.nameEn, "en", { sensitivity: "base" }),
-    )
-    .map((item, index) => ({ ...item, rank: index + 1 }));
+  const sorted = [...items].sort(
+    (a, b) =>
+      b.voteCount - a.voteCount ||
+      a.nameEn.localeCompare(b.nameEn, "en", { sensitivity: "base" }),
+  );
+  const counts = new Map<number, number>();
+  sorted.forEach((item) => {
+    counts.set(item.voteCount, (counts.get(item.voteCount) || 0) + 1);
+  });
+
+  let rank = 0;
+  let previousVotes: number | null = null;
+  return sorted.map((item) => {
+    if (previousVotes !== item.voteCount) {
+      rank += 1;
+      previousVotes = item.voteCount;
+    }
+    return {
+      ...item,
+      rank,
+      tied: (counts.get(item.voteCount) || 0) > 1,
+    };
+  });
 }

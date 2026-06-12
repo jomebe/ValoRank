@@ -35,6 +35,7 @@ export type RankingItem = {
   createdAt: string;
   voteCount: number;
   rank: number;
+  tied?: boolean;
 };
 
 export type SiteStats = {

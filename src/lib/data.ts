@@ -305,15 +305,28 @@ export const getTopItems = cache(async (limit = 10) => {
         const itemsById = new Map(
           (items as unknown as ItemRow[]).map((row) => [row.id, row]),
         );
-        return topIds.flatMap((id, index) => {
+        const tiedCounts = new Map<number, number>();
+        topIds.forEach((id) => {
+          const count = voteStats.get(id)?.count || 0;
+          tiedCounts.set(count, (tiedCounts.get(count) || 0) + 1);
+        });
+        let rank = 0;
+        let previousCount: number | null = null;
+        return topIds.flatMap((id) => {
           const row = itemsById.get(id);
           if (!row) {
             return [];
           }
+          const voteCount = voteStats.get(id)?.count || 0;
+          if (previousCount !== voteCount) {
+            rank += 1;
+            previousCount = voteCount;
+          }
           return [{
             ...fromItemRow(row),
-            voteCount: voteStats.get(id)?.count || 0,
-            rank: index + 1,
+            voteCount,
+            rank,
+            tied: (tiedCounts.get(voteCount) || 0) > 1,
           }];
         });
       }

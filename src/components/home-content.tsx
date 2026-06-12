@@ -107,7 +107,12 @@ export function HomeContent({
                     <div className="flex items-end justify-between gap-3">
                       <div className="min-w-0">
                         <p className="text-[9px] font-extrabold uppercase tracking-[0.17em] text-[#ff6673]">
-                          #{index + 1} · {t.categories[item.categoryId].short}
+                          {item.tied
+                            ? locale === "ko"
+                              ? `공동 ${item.rank}위`
+                              : `Tied #${item.rank}`
+                            : `#${item.rank}`}{" "}
+                          · {t.categories[item.categoryId].short}
                         </p>
                         <p className="mt-1.5 truncate text-sm font-extrabold text-white">
                           {getItemName(item, locale)}
