@@ -16,12 +16,14 @@ export function VoteButton({
   initialCount,
   initialVoted,
   compact = false,
+  onVoteChange,
 }: {
   itemId: string;
   categoryId: CategoryId;
   initialCount: number;
   initialVoted: boolean;
   compact?: boolean;
+  onVoteChange?: (voted: boolean) => void;
 }) {
   const { user, openLogin } = useAuth();
   const { locale, dictionary: t } = useLocale();
@@ -73,6 +75,7 @@ export function VoteButton({
       return;
     }
 
+    onVoteChange?.(nextVoted);
     startTransition(() => router.refresh());
   };
 

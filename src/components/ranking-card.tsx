@@ -12,10 +12,12 @@ export function RankingCard({
   item,
   voted = false,
   featured = false,
+  onVoteChange,
 }: {
   item: RankingItem;
   voted?: boolean;
   featured?: boolean;
+  onVoteChange?: (itemId: string, voted: boolean) => void;
 }) {
   const { locale, dictionary: t } = useLocale();
   const name = getItemName(item, locale);
@@ -110,6 +112,7 @@ export function RankingCard({
           initialCount={item.voteCount}
           initialVoted={voted}
           compact
+          onVoteChange={(nextVoted) => onVoteChange?.(item.id, nextVoted)}
         />
       </div>
     </article>

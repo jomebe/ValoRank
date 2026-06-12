@@ -9,8 +9,25 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { RankingCard } from "@/components/ranking-card";
 import { SearchBar } from "@/components/search-bar";
 import type { CategoryId, RankingItem, SortOption } from "@/lib/types";
-import { getItemName } from "@/lib/utils";
+import { getItemName, rankItems } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
+
+function toUnrankedItem(item: RankingItem): Omit<RankingItem, "rank"> {
+  return {
+    id: item.id,
+    externalId: item.externalId,
+    categoryId: item.categoryId,
+    nameEn: item.nameEn,
+    nameKo: item.nameKo,
+    descriptionEn: item.descriptionEn,
+    descriptionKo: item.descriptionKo,
+    imageUrl: item.imageUrl,
+    extra: item.extra,
+    source: item.source,
+    createdAt: item.createdAt,
+    voteCount: item.voteCount,
+  };
+}
 
 function getFilterValues(item: RankingItem, categoryId: CategoryId) {
   if (categoryId === "skins") {
@@ -43,30 +60,74 @@ export function RankingList({
   const [filter, setFilter] = useState(t.rankings.allFilters);
   const [visibleCount, setVisibleCount] = useState(48);
   const [activeVotedIds, setActiveVotedIds] = useState(votedItemIds);
+  const [liveItems, setLiveItems] = useState(items);
 
   useEffect(() => {
     const supabase = createClient();
-    if (!user || !supabase) {
+    if (!supabase) {
       return;
     }
+
     void supabase
       .from("votes")
       .select("item_id")
-      .eq("user_id", user.id)
+      .eq("category_id", categoryId)
       .then(({ data }) => {
-        setActiveVotedIds((data || []).map((vote) => vote.item_id));
+        const counts = new Map<string, number>();
+        (data || []).forEach((vote) => {
+          counts.set(vote.item_id, (counts.get(vote.item_id) || 0) + 1);
+        });
+        setLiveItems(
+          rankItems(
+            items.map((item) => ({
+              ...toUnrankedItem(item),
+              voteCount: counts.get(item.id) || 0,
+            })),
+          ),
+        );
       });
-  }, [user]);
+
+    if (user) {
+      void supabase
+        .from("votes")
+        .select("item_id")
+        .eq("user_id", user.id)
+        .then(({ data }) => {
+          setActiveVotedIds((data || []).map((vote) => vote.item_id));
+        });
+    }
+  }, [categoryId, items, user]);
+
+  const handleVoteChange = (itemId: string, nextVoted: boolean) => {
+    setActiveVotedIds((current) =>
+      nextVoted
+        ? current.includes(itemId)
+          ? current
+          : [...current, itemId]
+        : current.filter((id) => id !== itemId),
+    );
+    setLiveItems((current) =>
+      rankItems(
+        current.map((item) => ({
+          ...toUnrankedItem(item),
+          voteCount:
+            item.id === itemId
+              ? Math.max(0, item.voteCount + (nextVoted ? 1 : -1))
+              : item.voteCount,
+        })),
+      ),
+    );
+  };
 
   const filterOptions = useMemo(() => {
-    const values = items
+    const values = liveItems
       .flatMap((item) => getFilterValues(item, categoryId));
     return [t.rankings.allFilters, ...Array.from(new Set(values)).sort()];
-  }, [categoryId, items, t.rankings.allFilters]);
+  }, [categoryId, liveItems, t.rankings.allFilters]);
 
   const visibleItems = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
-    return [...items]
+    return [...liveItems]
       .filter((item) => {
         const matchesQuery =
           !normalizedQuery ||
@@ -103,7 +164,7 @@ export function RankingList({
   }, [
     categoryId,
     filter,
-    items,
+    liveItems,
     locale,
     query,
     sort,
@@ -117,6 +178,7 @@ export function RankingList({
   };
 
   const displayedItems = visibleItems.slice(0, visibleCount);
+  const displayedVotedIds = user ? activeVotedIds : [];
 
   return (
     <div>
@@ -172,7 +234,8 @@ export function RankingList({
             <RankingCard
               key={item.id}
               item={item}
-              voted={activeVotedIds.includes(item.id)}
+              voted={displayedVotedIds.includes(item.id)}
+              onVoteChange={handleVoteChange}
             />
           ))
         ) : (
