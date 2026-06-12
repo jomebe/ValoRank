@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { EmptyState } from "@/components/empty-state";
 import { FilterTabs } from "@/components/filter-tabs";
@@ -44,6 +44,41 @@ function getFilterValues(item: RankingItem, categoryId: CategoryId) {
   return [];
 }
 
+const VOTE_PAGE_SIZE = 1000;
+
+async function getAllVoteItemIds(
+  categoryId: CategoryId,
+  userId?: string,
+) {
+  const supabase = createClient();
+  if (!supabase) {
+    return [];
+  }
+
+  const itemIds: string[] = [];
+  for (let from = 0; ; from += VOTE_PAGE_SIZE) {
+    let query = supabase
+      .from("votes")
+      .select("item_id")
+      .order("id")
+      .range(from, from + VOTE_PAGE_SIZE - 1);
+
+    query = userId
+      ? query.eq("user_id", userId)
+      : query.eq("category_id", categoryId);
+
+    const { data, error } = await query;
+    if (error) {
+      throw error;
+    }
+
+    itemIds.push(...data.map((vote) => vote.item_id));
+    if (data.length < VOTE_PAGE_SIZE) {
+      return itemIds;
+    }
+  }
+}
+
 export function RankingList({
   items,
   categoryId,
@@ -61,21 +96,16 @@ export function RankingList({
   const [visibleCount, setVisibleCount] = useState(48);
   const [activeVotedIds, setActiveVotedIds] = useState(votedItemIds);
   const [liveItems, setLiveItems] = useState(items);
+  const cardPositions = useRef(new Map<string, DOMRect>());
 
   useEffect(() => {
-    const supabase = createClient();
-    if (!supabase) {
-      return;
-    }
+    let cancelled = false;
 
-    void supabase
-      .from("votes")
-      .select("item_id")
-      .eq("category_id", categoryId)
-      .then(({ data }) => {
+    void getAllVoteItemIds(categoryId).then((itemIds) => {
+      if (!cancelled) {
         const counts = new Map<string, number>();
-        (data || []).forEach((vote) => {
-          counts.set(vote.item_id, (counts.get(vote.item_id) || 0) + 1);
+        itemIds.forEach((itemId) => {
+          counts.set(itemId, (counts.get(itemId) || 0) + 1);
         });
         setLiveItems(
           rankItems(
@@ -85,17 +115,20 @@ export function RankingList({
             })),
           ),
         );
-      });
+      }
+    });
 
     if (user) {
-      void supabase
-        .from("votes")
-        .select("item_id")
-        .eq("user_id", user.id)
-        .then(({ data }) => {
-          setActiveVotedIds((data || []).map((vote) => vote.item_id));
-        });
+      void getAllVoteItemIds(categoryId, user.id).then((itemIds) => {
+        if (!cancelled) {
+          setActiveVotedIds(itemIds);
+        }
+      });
     }
+
+    return () => {
+      cancelled = true;
+    };
   }, [categoryId, items, user]);
 
   const handleVoteChange = (itemId: string, nextVoted: boolean) => {
@@ -180,6 +213,47 @@ export function RankingList({
   const displayedItems = visibleItems.slice(0, visibleCount);
   const displayedVotedIds = user ? activeVotedIds : [];
 
+  useLayoutEffect(() => {
+    const nextPositions = new Map<string, DOMRect>();
+    document.querySelectorAll<HTMLElement>("[data-ranking-card]").forEach((card) => {
+      const itemId = card.dataset.rankingCard;
+      if (!itemId) {
+        return;
+      }
+
+      const nextPosition = card.getBoundingClientRect();
+      nextPositions.set(itemId, nextPosition);
+      const previousPosition = cardPositions.current.get(itemId);
+      if (!previousPosition) {
+        return;
+      }
+
+      const deltaX = previousPosition.left - nextPosition.left;
+      const deltaY = previousPosition.top - nextPosition.top;
+      if (deltaX || deltaY) {
+        card.animate(
+          [
+            {
+              transform: `translate(${deltaX}px, ${deltaY}px)`,
+              boxShadow: "0 0 0 rgba(255,70,85,0)",
+            },
+            {
+              transform: "translate(0, 0)",
+              boxShadow: "0 0 36px rgba(255,70,85,.22)",
+              offset: 0.65,
+            },
+            {
+              transform: "translate(0, 0)",
+              boxShadow: "0 0 0 rgba(255,70,85,0)",
+            },
+          ],
+          { duration: 520, easing: "cubic-bezier(.2,.8,.2,1)" },
+        );
+      }
+    });
+    cardPositions.current = nextPositions;
+  }, [displayedItems]);
+
   return (
     <div>
       <div className="rounded-[22px] border border-white/[0.07] bg-[#10141b]/80 p-4 md:p-5">
@@ -231,12 +305,13 @@ export function RankingList({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {visibleItems.length ? (
           displayedItems.map((item) => (
-            <RankingCard
-              key={item.id}
-              item={item}
-              voted={displayedVotedIds.includes(item.id)}
-              onVoteChange={handleVoteChange}
-            />
+            <div key={item.id} data-ranking-card={item.id}>
+              <RankingCard
+                item={item}
+                voted={displayedVotedIds.includes(item.id)}
+                onVoteChange={handleVoteChange}
+              />
+            </div>
           ))
         ) : (
           <EmptyState onClear={reset} />

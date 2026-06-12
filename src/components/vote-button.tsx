@@ -31,9 +31,14 @@ export function VoteButton({
   const [isPending, startTransition] = useTransition();
   const [votedOverride, setVotedOverride] = useState<boolean | null>(null);
   const [count, setCount] = useState(initialCount);
+  const [isSaving, setIsSaving] = useState(false);
   const voted = votedOverride ?? initialVoted;
 
   const toggleVote = async () => {
+    if (isSaving) {
+      return;
+    }
+
     if (!user) {
       openLogin();
       return;
@@ -48,34 +53,44 @@ export function VoteButton({
     const previousVoted = voted;
     const previousCount = count;
     const nextVoted = !voted;
+    setIsSaving(true);
     setVotedOverride(nextVoted);
     setCount((value) => Math.max(0, value + (nextVoted ? 1 : -1)));
 
     const result = nextVoted
-      ? await supabase.from("votes").insert({
-          user_id: user.id,
-          item_id: itemId,
-          category_id: categoryId,
-        })
+      ? await supabase
+          .from("votes")
+          .insert({
+            user_id: user.id,
+            item_id: itemId,
+            category_id: categoryId,
+          })
+          .select("id")
+          .single()
       : await supabase
           .from("votes")
           .delete()
           .eq("user_id", user.id)
-          .eq("item_id", itemId);
+          .eq("item_id", itemId)
+          .select("id")
+          .single();
 
     if (result.error) {
       if (nextVoted && result.error.code === "23505") {
         setVotedOverride(true);
         setCount(previousCount);
+        setIsSaving(false);
         return;
       }
       setVotedOverride(previousVoted);
       setCount(previousCount);
+      setIsSaving(false);
       toast.error(t.vote.failed);
       return;
     }
 
     onVoteChange?.(nextVoted);
+    setIsSaving(false);
     startTransition(() => router.refresh());
   };
 
@@ -83,7 +98,7 @@ export function VoteButton({
     <button
       type="button"
       onClick={() => void toggleVote()}
-      disabled={isPending}
+      disabled={isPending || isSaving}
       aria-pressed={voted}
       aria-label={voted ? t.vote.remove : t.vote.action}
       className={cn(
@@ -92,7 +107,7 @@ export function VoteButton({
         voted
           ? "border-[#ff5d6c]/45 bg-[#ff4655] text-white shadow-[0_10px_30px_rgba(255,70,85,.16)]"
           : "border-white/10 bg-white/[0.045] text-white/72 hover:border-[#ff5d6c]/35 hover:bg-[#ff4655]/10 hover:text-white",
-        isPending && "cursor-wait opacity-70",
+        (isPending || isSaving) && "cursor-wait opacity-70",
       )}
     >
       {voted ? (
