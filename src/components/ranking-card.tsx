@@ -34,7 +34,7 @@ export function RankingCard({
       )}
     >
       <div className="absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-      <Link href={`/item/${item.id}`} className="relative block">
+      <Link href={`/item?id=${item.id}`} className="relative block">
         {isTitle ? (
           <div className="grid aspect-[1.2/1] place-items-center bg-[radial-gradient(circle_at_50%_40%,rgba(158,228,147,.13),transparent_58%),#111721] px-7">
             <span className="text-center text-2xl font-black tracking-[-0.04em] text-white/85">
@@ -83,7 +83,7 @@ export function RankingCard({
               {t.categories[item.categoryId].short}
             </p>
             <Link
-              href={`/item/${item.id}`}
+              href={`/item?id=${item.id}`}
               className="line-clamp-1 text-[17px] font-extrabold tracking-[-0.025em] text-white transition group-hover:text-[#ff7a85]"
             >
               {name}

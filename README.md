@@ -1,5 +1,11 @@
 # VALOVOTE
 
+## Cloudflare Pages
+
+- Build command: `npm run build:pages`
+- Build output directory: `out`
+- Root directory: `/`
+
 팬 투표로 VALORANT 무기 스킨, 요원, 스프레이, 총기 장식, 프로 선수를 랭킹화하는 반응형 웹사이트입니다.
 
 ## Stack

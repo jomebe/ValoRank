@@ -1,15 +1,72 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { ArrowRight, LogIn, Vote } from "lucide-react";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useLocale } from "@/components/providers/locale-provider";
 import { RankingCard } from "@/components/ranking-card";
-import type { RankingItem } from "@/lib/types";
+import { createClient } from "@/lib/supabase/client";
+import type { CategoryId, RankingItem } from "@/lib/types";
+import { rankItems } from "@/lib/utils";
 
-export function ProfileContent({ items }: { items: RankingItem[] }) {
+type ItemRow = {
+  id: string;
+  external_id: string | null;
+  category_id: CategoryId;
+  name_en: string;
+  name_ko: string | null;
+  description_en: string | null;
+  description_ko: string | null;
+  image_url: string | null;
+  extra: RankingItem["extra"] | null;
+  source: string | null;
+  created_at: string;
+  votes?: Array<{ count: number }> | null;
+};
+
+export function ProfileContent({ items: initialItems }: { items: RankingItem[] }) {
   const { user, openLogin } = useAuth();
   const { dictionary: t } = useLocale();
+  const [items, setItems] = useState(initialItems);
+
+  useEffect(() => {
+    const supabase = createClient();
+    if (!user || !supabase) {
+      return;
+    }
+
+    void supabase
+      .from("votes")
+      .select(
+        "items(id, external_id, category_id, name_en, name_ko, description_en, description_ko, image_url, extra, source, created_at, votes(count))",
+      )
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        const rows = (data || [])
+          .map((vote) => vote.items)
+          .filter(Boolean) as unknown as ItemRow[];
+        setItems(
+          rankItems(
+            rows.map((row) => ({
+              id: row.id,
+              externalId: row.external_id,
+              categoryId: row.category_id,
+              nameEn: row.name_en,
+              nameKo: row.name_ko,
+              descriptionEn: row.description_en,
+              descriptionKo: row.description_ko,
+              imageUrl: row.image_url,
+              extra: row.extra || {},
+              source: row.source || "manual",
+              createdAt: row.created_at,
+              voteCount: row.votes?.[0]?.count || 0,
+            })),
+          ),
+        );
+      });
+  }, [user]);
 
   if (!user) {
     return (

@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CategoryRankingContent } from "@/components/category-ranking-content";
-import { isCategoryId } from "@/lib/categories";
-import { getCategoryItems, getUserVotedItemIds } from "@/lib/data";
+import { categories, isCategoryId } from "@/lib/categories";
+import { getCategoryItems } from "@/lib/data";
 import { getDictionary } from "@/lib/dictionaries";
-import { createClient } from "@/lib/supabase/server";
 
 type PageProps = {
   params: Promise<{ category: string }>;
 };
+
+export function generateStaticParams() {
+  return categories.map(({ id }) => ({ category: id }));
+}
 
 export async function generateMetadata({
   params,
@@ -30,22 +33,13 @@ export default async function CategoryRankingPage({ params }: PageProps) {
     notFound();
   }
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = supabase
-    ? await supabase.auth.getUser()
-    : { data: { user: null } };
-  const [items, votedItemIds] = await Promise.all([
-    getCategoryItems(category),
-    getUserVotedItemIds(user?.id || null),
-  ]);
+  const items = await getCategoryItems(category);
 
   return (
     <CategoryRankingContent
       categoryId={category}
       items={items}
-      votedItemIds={votedItemIds}
+      votedItemIds={[]}
     />
   );
 }

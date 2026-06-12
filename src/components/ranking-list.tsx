@@ -1,14 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { EmptyState } from "@/components/empty-state";
 import { FilterTabs } from "@/components/filter-tabs";
 import { useLocale } from "@/components/providers/locale-provider";
+import { useAuth } from "@/components/providers/auth-provider";
 import { RankingCard } from "@/components/ranking-card";
 import { SearchBar } from "@/components/search-bar";
 import type { CategoryId, RankingItem, SortOption } from "@/lib/types";
 import { getItemName } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
 
 function getFilterValues(item: RankingItem, categoryId: CategoryId) {
   if (categoryId === "skins") {
@@ -35,10 +37,26 @@ export function RankingList({
   votedItemIds: string[];
 }) {
   const { locale, dictionary: t } = useLocale();
+  const { user } = useAuth();
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortOption>("votes-desc");
   const [filter, setFilter] = useState(t.rankings.allFilters);
   const [visibleCount, setVisibleCount] = useState(48);
+  const [activeVotedIds, setActiveVotedIds] = useState(votedItemIds);
+
+  useEffect(() => {
+    const supabase = createClient();
+    if (!user || !supabase) {
+      return;
+    }
+    void supabase
+      .from("votes")
+      .select("item_id")
+      .eq("user_id", user.id)
+      .then(({ data }) => {
+        setActiveVotedIds((data || []).map((vote) => vote.item_id));
+      });
+  }, [user]);
 
   const filterOptions = useMemo(() => {
     const values = items
@@ -154,7 +172,7 @@ export function RankingList({
             <RankingCard
               key={item.id}
               item={item}
-              voted={votedItemIds.includes(item.id)}
+              voted={activeVotedIds.includes(item.id)}
             />
           ))
         ) : (

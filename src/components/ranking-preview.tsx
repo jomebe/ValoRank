@@ -33,7 +33,7 @@ export function RankingPreview({ items }: { items: RankingItem[] }) {
           return (
             <Link
               key={item.id}
-              href={`/item/${item.id}`}
+              href={`/item?id=${item.id}`}
               className="group grid grid-cols-[28px_46px_1fr_auto] items-center gap-3 px-5 py-3.5 transition hover:bg-white/[0.025]"
             >
               <span

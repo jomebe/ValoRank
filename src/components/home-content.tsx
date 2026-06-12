@@ -89,7 +89,7 @@ export function HomeContent({
               return (
                 <Link
                   key={item.id}
-                  href={`/item/${item.id}`}
+                  href={`/item?id=${item.id}`}
                   className={`absolute w-[56%] overflow-hidden rounded-[26px] border border-white/10 bg-[#111720] shadow-2xl shadow-black/45 transition duration-500 hover:z-30 hover:rotate-0 hover:scale-[1.035] ${positions[index]}`}
                 >
                   <ItemImage

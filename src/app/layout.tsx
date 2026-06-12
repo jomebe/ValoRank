@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppProviders } from "@/components/providers/app-providers";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { createClient } from "@/lib/supabase/server";
-import type { Locale } from "@/lib/types";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -40,63 +37,20 @@ export const metadata: Metadata = {
   },
 };
 
-function detectLocale(
-  cookieLocale: string | undefined,
-  country: string | null,
-  acceptLanguage: string | null,
-): Locale {
-  if (cookieLocale === "ko" || cookieLocale === "en") {
-    return cookieLocale;
-  }
-  if (country?.toUpperCase() === "KR") {
-    return "ko";
-  }
-  return acceptLanguage?.toLowerCase().startsWith("ko") ? "ko" : "en";
-}
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [headerStore, cookieStore, supabase] = await Promise.all([
-    headers(),
-    cookies(),
-    createClient(),
-  ]);
-  let initialLocale = detectLocale(
-    cookieStore.get("valorank-locale")?.value,
-    headerStore.get("x-vercel-ip-country") || headerStore.get("cf-ipcountry"),
-    headerStore.get("accept-language"),
-  );
-  const {
-    data: { user },
-  } = supabase
-    ? await supabase.auth.getUser()
-    : { data: { user: null } };
-  if (user && !cookieStore.get("valorank-locale") && supabase) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("preferred_locale")
-      .eq("id", user.id)
-      .maybeSingle();
-    if (
-      profile?.preferred_locale === "ko" ||
-      profile?.preferred_locale === "en"
-    ) {
-      initialLocale = profile.preferred_locale;
-    }
-  }
-
   return (
     <html
-      lang={initialLocale}
+      lang="ko"
       data-theme="dark"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        <AppProviders initialLocale={initialLocale} initialUser={user}>
+        <AppProviders initialLocale="ko" initialUser={null}>
           <div className="flex min-h-screen flex-col">
             <Header />
             <div className="flex-1">{children}</div>
