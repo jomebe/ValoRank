@@ -1,16 +1,15 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
+import { siteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   return [
-    { url: baseUrl, lastModified: new Date(), priority: 1 },
-    { url: `${baseUrl}/rankings`, lastModified: new Date(), priority: 0.9 },
+    { url: siteUrl, lastModified: new Date(), priority: 1 },
+    { url: `${siteUrl}/rankings`, lastModified: new Date(), priority: 0.9 },
     ...categories.map((category) => ({
-      url: `${baseUrl}/rankings/${category.id}`,
+      url: `${siteUrl}/rankings/${category.id}`,
       lastModified: new Date(),
       priority: 0.8,
     })),

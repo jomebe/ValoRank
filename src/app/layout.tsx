@@ -4,6 +4,7 @@ import Script from "next/script";
 import { AppProviders } from "@/components/providers/app-providers";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,9 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  ),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "VALOVOTE — Community VALORANT Rankings",
     template: "%s | VALOVOTE",
