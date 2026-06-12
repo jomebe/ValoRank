@@ -1,1 +1,1 @@
-export const siteUrl = "https://valorank.pages.dev";
+export const siteUrl = "https://valovote.pages.dev";
