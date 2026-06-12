@@ -37,6 +37,10 @@ export function AuthProvider({
       return;
     }
 
+    void supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user || null);
+    });
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {

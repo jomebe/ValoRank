@@ -27,8 +27,9 @@ export function VoteButton({
   const { locale, dictionary: t } = useLocale();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [voted, setVoted] = useState(initialVoted);
+  const [votedOverride, setVotedOverride] = useState<boolean | null>(null);
   const [count, setCount] = useState(initialCount);
+  const voted = votedOverride ?? initialVoted;
 
   const toggleVote = async () => {
     if (!user) {
@@ -45,7 +46,7 @@ export function VoteButton({
     const previousVoted = voted;
     const previousCount = count;
     const nextVoted = !voted;
-    setVoted(nextVoted);
+    setVotedOverride(nextVoted);
     setCount((value) => Math.max(0, value + (nextVoted ? 1 : -1)));
 
     const result = nextVoted
@@ -61,7 +62,12 @@ export function VoteButton({
           .eq("item_id", itemId);
 
     if (result.error) {
-      setVoted(previousVoted);
+      if (nextVoted && result.error.code === "23505") {
+        setVotedOverride(true);
+        setCount(previousCount);
+        return;
+      }
+      setVotedOverride(previousVoted);
       setCount(previousCount);
       toast.error(t.vote.failed);
       return;
