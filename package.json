@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "preview": "npm run build:pages && wrangler pages dev out",
-    "deploy": "npm run build:pages && wrangler pages deploy out --project-name valovote",
+    "deploy": "npm run build:pages",
     "seed": "tsx scripts/seed.ts",
     "sync:valorant": "tsx scripts/sync-valorant.ts",
     "sync:players": "tsx scripts/sync-players.ts",
