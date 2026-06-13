@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: "VALOVOTE",
+  creator: "VALOVOTE",
+  publisher: "VALOVOTE",
   title: {
     default: "VALOVOTE — Community VALORANT Rankings",
     template: "%s | VALOVOTE",
@@ -37,9 +40,26 @@ export const metadata: Metadata = {
     url: siteUrl,
     locale: "ko_KR",
     alternateLocale: ["en_US"],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "VALOVOTE — Vote for the best of VALORANT",
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    title: "VALOVOTE — Vote for the best of VALORANT",
+    description:
+      "The fan-powered leaderboard for VALORANT skins, agents, collectibles, and players.",
+    images: ["/og-image.png"],
+  },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
   },
 };
 
@@ -71,12 +91,31 @@ export default async function RootLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
+            "@id": `${siteUrl}/#website`,
             name: "VALOVOTE",
             alternateName: "발로보트",
             url: siteUrl,
+            publisher: {
+              "@id": `${siteUrl}/#organization`,
+            },
             description:
               "Community voting and rankings for VALORANT skins, agents, collectibles, titles, and pro players.",
             inLanguage: ["ko", "en"],
+          })}
+        </Script>
+        <Script
+          id="organization-structured-data"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+        >
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "@id": `${siteUrl}/#organization`,
+            name: "VALOVOTE",
+            alternateName: "발로보트",
+            url: siteUrl,
+            logo: `${siteUrl}/favicon.svg`,
           })}
         </Script>
         <Script
